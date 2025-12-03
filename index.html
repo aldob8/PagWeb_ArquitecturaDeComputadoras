@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquitectura de Computadoras</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #1a2332;
+            background: #f5f5f5;
+        }
+        
+        .header {
+            background: #2d3e50;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-logo {
+            width: 120px;
+            height: 120px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 18px;
+        }
+
+        .footer {
+            background: #2d3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .footer p {
+            font-size: 14px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .main-menu {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .menu-card {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 30px;
+            cursor: pointer;
+        }
+        
+        .menu-card h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .menu-card p {
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .content-area {
+            display: none;
+        }
+        
+        .content-area.active {
+            display: block;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2d3e50;
+        }
+        
+        .subsection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .subsection-btn {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .pdf-viewer {
+            display: none;
+            background: white;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+        
+        .pdf-viewer.active {
+            display: block;
+        }
+        
+        .pdf-header {
+            background: #2d3e50;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .close-btn {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 5px 15px;
+            cursor: pointer;
+        }
+        
+        .pdf-container {
+            width: 100%;
+            height: 800px;
+        }
+        
+        .pdf-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .intro-section {
+            display: none;
+            background: white;
+            border-left: 3px solid #2d3e50;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .intro-section.active {
+            display: block;
+        }
+
+        .intro-section h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .intro-section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .intro-section ul {
+            margin-left: 20px;
+        }
+
+        .intro-section li {
+            margin-bottom: 8px;
+        }
+        
+        .back-btn {
+            background: #2d3e50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .header-logo {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .header h1 {
+                font-size: 28px;
+            }
+            
+            .main-menu {
+                grid-template-columns: 1fr;
+            }
+            
+            .subsection-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pdf-container {
+                height: 600px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="https://www.tecnm.mx/" target="_blank">
+                <img src="/assets/img/escudo_TecNM.png" alt="TecNM" class="header-logo">
+            </a>
+            <div>
+                <h1>Arquitectura de Computadoras</h1>
+                <p>Aldo Azael Orozco Badillo</p>
+            </div>
+            <a href="https://www.saltillo.tecnm.mx/" target="_blank">
+                <img src="/assets/img/escudo_ITS.png" alt="ITS" class="header-logo">
+            </a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div id="mainMenu" class="main-menu">
+            <div class="menu-card" onclick="showSection('unidades')">
+                <h2>Unidades</h2>
+                <p>Material teórico de las 5 unidades del curso</p>
+            </div>
+            
+            <div class="menu-card" onclick="showSection('practicas')">
+                <h2>Prácticas</h2>
+                <p>Reportes de prácticas de laboratorio</p>
+            </div>
+            
+            <div class="menu-card" onclick="showSection('extras')">
+                <h2>Tareas</h2>
+                <p>Tareas realizadas a lo largo del semestre</p>
+            </div>
+        </div>
+        
+        <div id="unidadesSection" class="content-area">
+            <button class="back-btn" onclick="showMenu()">← Volver al menú</button>
+            <h2 class="section-title">Unidades del Curso</h2>
+            
+            <div class="subsection-grid">
+                <button class="subsection-btn" onclick="showPDF('unidad1', 'Unidad 1')">Unidad 1</button>
+                <button class="subsection-btn" onclick="showPDF('unidad2', 'Unidad 2')">Unidad 2</button>
+                <button class="subsection-btn" onclick="showPDF('unidad3', 'Unidad 3')">Unidad 3</button>
+                <button class="subsection-btn" onclick="showPDF('unidad4', 'Unidad 4')">Unidad 4</button>
+                <button class="subsection-btn" onclick="showPDF('unidad5', 'Unidad 5')">Unidad 5</button>
+            </div>
+            
+            <div id="introUnidades" class="intro-section">
+                <h3 id="introTitle">Introducción</h3>
+                <div id="introText"></div>
+            </div>
+
+            <div id="pdfViewer" class="pdf-viewer">
+                <div class="pdf-header">
+                    <span id="pdfTitle">Documento</span>
+                    <button class="close-btn" onclick="closePDF()">Cerrar</button>
+                </div>
+                <div class="pdf-container"></div>
+            </div>
+        </div>
+        
+        <div id="practicasSection" class="content-area">
+            <button class="back-btn" onclick="showMenu()">← Volver al menú</button>
+            <h2 class="section-title">Prácticas de Laboratorio</h2>
+            
+            <div class="subsection-grid">
+                <button class="subsection-btn" onclick="showPDF('practica1', 'Práctica 1')">Práctica 1</button>
+                <button class="subsection-btn" onclick="showPDF('practica2', 'Práctica 2')">Práctica 2</button>
+                <button class="subsection-btn" onclick="showPDF('practica3', 'Práctica 3')">Práctica 3</button>
+                <button class="subsection-btn" onclick="showPDF('practica4', 'Práctica 4')">Práctica 4</button>
+            </div>
+            
+            <div id="pdfViewerPracticas" class="pdf-viewer">
+                <div class="pdf-header">
+                    <span id="pdfTitlePracticas">Documento</span>
+                    <button class="close-btn" onclick="closePDF()">Cerrar</button>
+                </div>
+                <div class="pdf-container"></div>
+            </div>
+        </div>
+        
+        <div id="extrasSection" class="content-area">
+            <button class="back-btn" onclick="showMenu()">← Volver al menú</button>
+            <h2 class="section-title">Tareas</h2>
+            
+            <div class="subsection-grid">
+                <button class="subsection-btn" onclick="showPDF('tarea1', 'Tarea 1')">Tarea 1</button>
+                <button class="subsection-btn" onclick="showPDF('tarea2', 'Tarea 2')">Tarea 2</button>
+                <button class="subsection-btn" onclick="showPDF('tarea3', 'Tarea 3')">Tarea 3</button>
+            </div>
+            
+            <div id="pdfViewerExtras" class="pdf-viewer">
+                <div class="pdf-header">
+                    <span id="pdfTitleExtras">Documento</span>
+                    <button class="close-btn" onclick="closePDF()">Cerrar</button>
+                </div>
+                <div class="pdf-container"></div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>Esta página fue creada como parte del proyecto final del curso Arquitectura de Computadoras, de la carrera de Ingeniería en Sistemas Computacionales, del Instituto Tecnológico de Saltillo, impartido por el Ingeniero Miguel Maldonado Leza. Semestre Agosto-Diciembre 2025</p>
+    </footer>
+    
+    <script>
+        const pdfUrls = {
+            'unidad1': 'https://drive.google.com/file/d/15d7xbqdvHy0PMCy08xMKVJM_2SNw39O1/preview',
+            'unidad2': 'https://drive.google.com/file/d/1KmrYbeT76eBbcMd2LPoOUjEln7sLpi1O/preview',
+            'unidad3': 'https://drive.google.com/file/d/1VpBYRqHGoy5BTFUFEa2NnjHi5HH48C2D/preview',
+            'unidad4': 'https://drive.google.com/file/d/1qTjUJ3PLiKSZ9ZIeqlnX2wZTy-pjL5ot/preview',
+            'unidad5': 'https://drive.google.com/file/d/1FZVazYPYCSVXbAg9JT53Fd1uOI52V_bi/preview',
+            'practica1': 'https://drive.google.com/file/d/1t7wMGzyGNZG4P3OusOxyS0Uyj3VC06z2/preview',
+            'practica2': 'https://drive.google.com/file/d/1NEfP0vxiFuDkt3VullPxe5LzhwTPo6AI/preview',
+            'practica3': 'https://drive.google.com/file/d/1K8moJwHKFHNPDetIFNYBeAlzWL5lLYYb/preview',
+            'practica4': 'https://drive.google.com/file/d/1queP7TE9v642n6dGHnP-6EKNmSjGWRFQ/preview',
+            'tarea1': 'https://drive.google.com/file/d/1oOJLN0x1aNhdlnh3RjHfxcppZhcmlMa_/preview',
+            'tarea2': 'https://drive.google.com/file/d/16Tf6tH-M7dumGMJDt6Qe4Ct8ekNgfSmL/preview',
+            'tarea3': 'https://drive.google.com/file/d/1Nham-GxHljOD3pNlpXLxbG4bxOC0fIDf/preview'
+        };
+
+        const unidadIntros = {
+            'unidad1': {
+                title: 'Unidad 1: Arquitecturas de Cómputo',
+                text: `<p>El presente material didáctico constituye una introducción fundamental a la Arquitectura de Computadoras, sentando las bases conceptuales a través del análisis de diversos Modelos de Arquitectura, incluyendo los enfoques clásico (Von Neumann), segmentado (pipeline) y de multiprocesamiento. Se examina la estructura esencial de la Unidad Central de Procesamiento (CPU), detallando la función crítica de la Unidad Aritmética Lógica (ALU) y los Registros internos. Con un enfoque en la jerarquía de la memoria, se abordan las características de la Memoria Principal (RAM) y los diferentes niveles de Caché que optimizan el rendimiento. Finalmente, se exploran los Sistemas de Entrada y Salida (E/S), diferenciando los métodos de transferencia de datos como la E/S programada, la gestión por interrupciones y el eficiente Acceso Directo a Memoria (DMA), concluyendo con una revisión sobre los Buses de datos, direcciones y control que permiten la comunicación sistémica.</p>
+                <p><strong>Temas principales:</strong></p>
+                <ul>
+                    <li>1.1 Modelos de arquitecturas de cómputo</li>
+                    <li>1.2 Análisis de los componentes</li>
+                    <li>1.2.1 CPU</li>
+                    <li>1.2.2 Memoria</li>
+                    <li>1.2.3 Manejo de la entrada/salida</li>
+                    <li>1.2.4 Buses</li>
+                </ul>`
+            },
+            'unidad2': {
+                title: 'Unidad 2: Estructura y Funcionamiento de la CPU',
+                text: `<p>El presente módulo profundiza en la estructura y funcionamiento de la Unidad Central de Procesamiento (CPU), pieza fundamental de todo sistema computacional. Inicialmente, se describe la organización interna del procesador, destacando los componentes clave como la Unidad de Control (UC), la Unidad Aritmético-Lógica (ALU) y los Registros. Estos últimos se categorizan rigurosamente en registros Visibles para el Usuario (propósito general, punteros y de índice) y registros de Control y Estado (banderas o flags), cruciales para la gestión y seguridad del sistema.</p>
+                <p><strong>Temas principales:</strong></p>
+                <ul>
+                    <li>2.1 Organización del procesador</li>
+                    <li>2.2 Estructura de registros</li>
+                    <li>2.3 El ciclo de instrucción</li>
+                    <li>2.4 Modos de direccionamiento</li>
+                    <li>2.5 Estudio de CPU</li>
+                </ul>`
+            },
+            'unidad3': {
+                title: 'Unidad 3: Selección de Componentes para Ensamble de Equipo de Cómputo',
+                text: `<p>Esta unidad ofrece un estudio riguroso sobre la arquitectura y la selección de componentes fundamentales para el ensamblaje de un equipo de cómputo, abordando las estructuras que garantizan la operatividad del sistema. Se inicia con el análisis del Chipset y sus funciones de interconexión (Northbridge y Southbridge), la estructura interna de la Unidad Central de Procesamiento (CPU) y los mecanismos de comunicación como el Controlador del Bus.</p>
+                <p><strong>Temas principales:</strong></p>
+                <ul>
+                    <li>3.1 Chipset</li>
+                    <li>3.2 Almacenamiento</li>
+                    <li>3.3 Fuentes de alimentación</li>
+                    <li>3.4 Ambientes de servicio</li>
+                </ul>`
+            },
+            'unidad4': {
+                title: 'Unidad 4: Procesamiento Paralelo',
+                text: `<p>La cuarta unidad aborda los principios fundamentales de la computación paralela como una estrategia esencial en la Arquitectura de Computadoras, cuyo objetivo principal es la optimización del tiempo de ejecución mediante la división de problemas complejos en subproblemas concurrentes. Se inicia definiendo la disciplina y sus conceptos clave, incluyendo la Ley de Amdahl, para luego clasificar los diferentes niveles de paralelismo.</p>
+                <p><strong>Temas principales:</strong></p>
+                <ul>
+                    <li>4.1 Aspectos básicos de la computación paralela</li>
+                    <li>4.2 Tipos de computación paralela</li>
+                    <li>4.3 Sistema de memoria compartida</li>
+                    <li>4.4 Sistema de memoria distribuida</li>
+                    <li>4.5 Casos de estudio</li>
+                </ul>`
+            },
+            'unidad5': {
+                title: 'Unidad 5: Procesadores y Tipos de Memoria',
+                text: `<p>La presente unidad se enfoca en el estudio fundamental de dos componentes críticos que definen el rendimiento y la operatividad de los sistemas computacionales modernos: el procesador y los tipos de memoria. En primer lugar, se establece una clasificación detallada de las Unidades Centrales de Procesamiento (CPU), analizando sus características, arquitectura y aplicaciones en las gamas baja, media y alta.</p>
+                <p><strong>Temas principales:</strong></p>
+                <ul>
+                    <li>5.1 Procesadores</li>
+                    <li>5.1.1 Procesadores de gama baja</li>
+                    <li>5.1.2 Procesadores de gama media</li>
+                    <li>5.1.3 Procesadores de gama alta</li>
+                    <li>5.2 Tipos de memoria</li>
+                </ul>`
+            }
+        };
+
+        let currentSection = null;
+        let currentViewer = null;
+        
+        function showSection(sectionName) {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.querySelectorAll('.content-area').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionName + 'Section').classList.add('active');
+            currentSection = sectionName;
+            closePDF();
+        }
+        
+        function showMenu() {
+            document.getElementById('mainMenu').style.display = 'grid';
+            document.querySelectorAll('.content-area').forEach(s => s.classList.remove('active'));
+            closePDF();
+            currentSection = null;
+        }
+        
+        function showPDF(pdfId, title) {
+            let viewerId, titleId, introId;
+            
+            if (currentSection === 'unidades') {
+                viewerId = 'pdfViewer';
+                titleId = 'pdfTitle';
+                introId = 'introUnidades';
+            } else if (currentSection === 'practicas') {
+                viewerId = 'pdfViewerPracticas';
+                titleId = 'pdfTitlePracticas';
+            } else {
+                viewerId = 'pdfViewerExtras';
+                titleId = 'pdfTitleExtras';
+            }
+            
+            const viewer = document.getElementById(viewerId);
+            const container = viewer.querySelector('.pdf-container');
+            
+            document.getElementById(titleId).textContent = title;
+            container.innerHTML = '';
+
+            if (currentSection === 'unidades' && unidadIntros[pdfId]) {
+                const intro = document.getElementById(introId);
+                document.getElementById('introTitle').textContent = unidadIntros[pdfId].title;
+                document.getElementById('introText').innerHTML = unidadIntros[pdfId].text;
+                intro.classList.add('active');
+                setTimeout(() => intro.scrollIntoView({ behavior: 'smooth' }), 100);
+            }
+            
+            if (pdfUrls[pdfId]) {
+                const iframe = document.createElement('iframe');
+                iframe.src = pdfUrls[pdfId];
+                container.appendChild(iframe);
+            }
+            
+            viewer.classList.add('active');
+            currentViewer = viewerId;
+        }
+        
+        function closePDF() {
+            if (currentViewer) {
+                document.getElementById(currentViewer).classList.remove('active');
+                currentViewer = null;
+            }
+            const intro = document.getElementById('introUnidades');
+            if (intro) intro.classList.remove('active');
+        }
+    </script>
+</body>
+</html>
